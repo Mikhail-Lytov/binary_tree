@@ -1,85 +1,92 @@
-public class binary_tree<T> {
-    Node<T> root = new Node<T>(null,null,null);
+public class binary_tree<E extends Comparable<E>> implements Comparable<binary_tree>{
+    Node<E> root;
     int numbers_element;
-
     public binary_tree(){
         numbers_element = 0;
+        root = new Node<E>(null,null,null);
     }
-    public void add_element(T element){
-        if(numbers_element > 0) {
-            Node<T> check = root;
-            for (int i = 0; i < numbers_element - 1; i++) {
-                check = check.getRight();
-            }
-
-            Node<T> next = new Node<T>(element, check, null);
-            //System.out.println(next);
-            check.setRight(next);
-
-        }else if (numbers_element == 0){
+    public void add_tree(E element){
+        int result;
+        if(numbers_element == 0){
             root.setItem(element);
-            //System.out.println(root);
-            //numbers_element++;
-        }
-        numbers_element++;
-    }
-    public void search_element(T element){
-        Node<T> check = root;
-        boolean flag = true;
-        for(int i = 0; i < numbers_element; i++){
-            if(element == check.getItem()){
-                System.out.println(check);
-                flag = false;
-            }else check = check.getRight();
+            numbers_element++;
+        }else if(numbers_element > 0){
+            Node<E> node_element = new Node<E>(element,null,null);
+            Node<E> direction = root;
+            result = direction.compareTo(node_element);
+            while (result != 0) {
+                if (result > 0) {//когда следующий элемент меньше
+                    if(direction.getLeft() == null) {
+                        direction.setLeft(node_element);
+                        numbers_element++;
+                        //System.out.println("1 : " + result);
+                        break;
+                    }else{
 
-        }
-        if(flag) {
-            System.out.println("Не найдено");
-        }
-    }
-    public void clear_tree(){
-        root.setRight(null);
-    }
-    public void copy_tree(binary_tree<T> original){
-        Node<T> copy = original.root;
-        root = copy;
-        numbers_element = original.numbers_element;
-        for(int i = 0; i <= numbers_element; i++){
-            root.right = copy.right;
+                        direction = direction.getLeft();
+                        result = direction.compareTo(node_element);
+                    }
+                } else if (result < 0) {//когда следующей элемент больше
+                    if(direction.getRight() == null){
+                        direction.setRight(node_element);
+                        numbers_element++;
+                        break;
+                    }else{
+                        direction = direction.getLeft();
+                        result = direction.compareTo(node_element);
+                    }
+                    System.out.println("-1 " + result);
+                }
+            }
         }
     }
 
+    public int compareTo(binary_tree o){
+        int result = this.root.compareTo(o.root);
+        return result;
+    }
+    /*public int compareTo(binary_tree o){
+        //Node<T> root_copy = o.root;
+        int result = root.compareTo(o.root);
+        return result;
+    }*/
 
-
-    private static class Node<T>{
-        T item;
-        Node<T> left;
-        Node<T> right;
-        private Node(T item, Node<T> left, Node<T> right){
+    private class Node<E extends Comparable<E>> implements Comparable<Node<E>>{
+        E item;
+        Node<E> left;
+        Node<E> right;
+        private Node(E item, Node<E> left, Node<E> right){
             this.item = item;
             this.left = left;
             this.right = right;
         }
-        public void setItem(T item){
+        public void setItem(E item){
             this.item = item;
         }
-        public void setLeft(Node<T> left){
+        public void setLeft(Node<E> left){
             this.left = left;
         }
-        public void setRight(Node<T> right){
+        public void setRight(Node<E> right){
             this.right = right;
         }
-        public T getItem(){
+        public E getItem(){
             return item;
         }
-        public Node<T> getLeft(){
+        public Node<E> getLeft(){
             return left;
         }
-        public Node<T> getRight(){
+        public Node<E> getRight(){
             return right;
         }
-       /* public String toString(){
-            return "Лежит между " + left + " и " + right + " Элемент " + item;
-        }*/
+        public int compareTo(Node<E> o){
+            int result = this.item.compareTo(o.item);
+            //return result;
+            return result;
+        }
+        
+        public String toString(){
+            return left + " " + item + " " + right;
+       }
+
     }
 }
