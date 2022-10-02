@@ -15,11 +15,10 @@ public class binary_tree<E extends Comparable<E>> implements Comparable<binary_t
             Node<E> direction = root;
             result = direction.compareTo(node_element);
             while (result != 0) {
-                if (result > 0) {//когда следующий элемент меньше
+                if (result > 0 && result < 2147483647) {//когда следующий элемент меньше
                     if(direction.getLeft() == null) {
                         direction.setLeft(node_element);
                         numbers_element++;
-                        //System.out.println("1 : " + result);
                         break;
                     }else{
 
@@ -32,24 +31,98 @@ public class binary_tree<E extends Comparable<E>> implements Comparable<binary_t
                         numbers_element++;
                         break;
                     }else{
-                        direction = direction.getLeft();
+                        direction = direction.getRight();
                         result = direction.compareTo(node_element);
                     }
-                    System.out.println("-1 " + result);
+                }else if(result == 2147483647){
+                    break;
                 }
             }
         }
     }
-
-    public int compareTo(binary_tree o){
-        int result = this.root.compareTo(o.root);
-        return result;
+    public String search(E element){
+        try {
+            int result;
+            Node<E> node_element = new Node<E>(element, null, null);
+            Node<E> direction = root;
+            if (numbers_element != 0) {
+                result = direction.compareTo(node_element);
+            } else {
+                return "not found";
+            }
+            while (result != 0) {
+                if (result > 0) {//когда следующий элемент меньше
+                    if (direction.getLeft() == null) {
+                        if ((result = direction.compareTo(node_element)) == 0) {
+                            return "found";
+                        } else {
+                            return "not found";
+                        }
+                    } else {
+                        direction = direction.getLeft();
+                        result = direction.compareTo(node_element);
+                    }
+                } else if (result < 0) {//когда следующей элемент больше
+                    if (direction.getRight() == null) {
+                        if ((result = direction.compareTo(node_element)) == 0) {
+                            return "found";
+                        } else {
+                            return "not found";
+                        }
+                    } else {
+                        direction = direction.getRight();
+                        result = direction.compareTo(node_element);
+                    }
+                }
+            }
+            if (result == 0) {
+                return "found";
+            } else {
+                return "Problem is in search";
+            }
+        }catch (NullPointerException e){
+            System.out.println("looked beyond the tree");
+            return "Problems";
+        }
     }
-    /*public int compareTo(binary_tree o){
-        //Node<T> root_copy = o.root;
-        int result = root.compareTo(o.root);
-        return result;
-    }*/
+    public void clear(){
+        root.setRight(null);
+        root.setLeft(null);
+        root.setItem(null);
+        numbers_element = 0;
+        System.gc();
+    }
+    public int compareTo(binary_tree o){
+        try {
+            int result = this.root.compareTo(o.root);
+            return result;
+        }catch (ClassCastException e){
+            System.out.println("Invalid value entered");
+            return 2147483647;
+        }
+    }
+
+    public void copy(binary_tree original) {
+        root.setRight(original.root.getRight());
+        root.setLeft(original.root.getLeft());
+        Node<E> copy = original.root;
+        root.setItem(copy.getItem());
+        numbers_element = original.numbers_element;
+        cyclic_copying(root);
+    }
+     public void cyclic_copying(Node<E> next){
+        Node<E> copy = next;
+        copy.setItem(next.getItem());
+        copy.setLeft(next.getLeft());
+        copy.setRight(next.getRight());
+        if(next.getRight() != null){
+            cyclic_copying(next.getRight());
+        }
+        if(next.getLeft() != null){
+            cyclic_copying(next.getLeft());
+        }
+    }
+
 
     private class Node<E extends Comparable<E>> implements Comparable<Node<E>>{
         E item;
@@ -79,9 +152,14 @@ public class binary_tree<E extends Comparable<E>> implements Comparable<binary_t
             return right;
         }
         public int compareTo(Node<E> o){
-            int result = this.item.compareTo(o.item);
-            //return result;
-            return result;
+            try {
+                int result = this.item.compareTo(o.item);
+                //return result;
+                return result;
+            }catch (ClassCastException e){
+                System.out.println("Invalid value entered");
+                return 2147483647;
+            }
         }
         
         public String toString(){
