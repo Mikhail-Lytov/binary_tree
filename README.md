@@ -1,24 +1,24 @@
-## Лабораторная работа №4 — Двоичное дерево поиска ##
-***Задача:*** реализовать класс ***binary_tree***, который бы обеспечивал
-логарифмическую сложность поиска и добавления нового
-элемента.
-Указания по выполнению:
-- лабораторная работа состоит из двух файлов:
-  ***binary_tree.java*** — описание класса binary_tree, прототипы
-  методов, реализация методов;
-  ***test-binary_tree.java*** — тестирование и проверка возможностей
-  класса;
-- создать вспомогательную шаблонную структуру, содержащую
-  поле для хранения значения произвольного типа и 2 поля для
-  хранения ссылок на левого и правого потомков;
-- класс ***binary_tree*** должен быть шаблонным;
-- класс ***binary_tree*** должен содержать следующие поля:
-  ссылку на корневой элемент;
-  число элементов в дереве;
-- класс ***binary_tree*** должен содержать следующие методы:
-  конструктор;
-  конструктор копирования;
-  добавление элемента;
-  поиск элемента;
-  удаление всех элементов;
-  необходимые интерфейсы (в зависимости от реализации);
+## Binary search tree ##
+***Task:*** implement the ***binary_tree*** class, which would provide
+logarithmic complexity of searching and adding a new
+element.
+Instructions for implementation:
+- the laboratory work consists of two files:
+***binary_tree.java *** — description of the binary_tree class, prototypes
+  methods, implementation of methods;
+  ***test-binary_tree.java *** — testing and verification of capabilities
+  class;
+- create an auxiliary template structure containing
+  a field for storing values of any type and 2 fields for
+storing references to the left and right descendants;
+- the ***binary_tree*** class must be a template;
+- the ***binary_tree*** class must contain the following fields:
+a reference to the root element;
+  number of elements in the tree;
+- the ***binary_tree*** class must contain the following methods:
+  designer;
+  copy constructor;
+  adding an element;
+  element search;
+  deleting all elements;
+  required interfaces;
