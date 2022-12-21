@@ -85,6 +85,38 @@ public class binary_tree<E extends Comparable<E>> implements Comparable<binary_t
             return "Problems";
         }
     }
+
+
+
+
+    private void search_tree_element(Node<E> element){
+        System.out.println(element.getItem());
+        if(element.getLeft() != null) {
+            search_tree_element(element.left);
+        }
+        if(element.getRight() != null) {
+            search_tree_element(element.right);
+        }
+
+    }
+    public void search_tree(){
+        System.out.println("Начало ");
+        E element = root.item;
+        if(root.getLeft() == null && root.getRight() == null){
+            System.out.println(root.item);
+        }
+        if(element != null){
+            System.out.println(element);
+            if(root.getLeft() != null) {
+                search_tree_element(root.left);
+            }else System.out.println(element);
+            if(root.getRight() != null) {
+                search_tree_element(root.right);
+            }else{
+                System.out.println(element);
+            }
+        }
+    }
     public void clear(){
         root.setRight(null);
         root.setLeft(null);
